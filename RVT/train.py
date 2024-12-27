@@ -116,12 +116,12 @@ def main(config: DictConfig):
     callbacks.append(GradFlowLogCallback(config.logging.train.log_model_every_n_steps))
     if config.training.lr_scheduler.use:
         callbacks.append(LearningRateMonitor(logging_interval="step"))
-    if (
-        config.logging.train.high_dim.enable
-        or config.logging.validation.high_dim.enable
-    ):
-        viz_callback = get_viz_callback(config=config)
-        callbacks.append(viz_callback)
+    # if (
+    #     config.logging.train.high_dim.enable
+    #     or config.logging.validation.high_dim.enable
+    # ):
+    #     viz_callback = get_viz_callback(config=config)
+    #     callbacks.append(viz_callback)
     callbacks.append(ModelSummary(max_depth=2))
 
     logger.watch(
