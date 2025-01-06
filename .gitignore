@@ -1,6 +1,6 @@
 outputs/
 wandb/
-ssm_rvt
+rvt_ssm
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
