@@ -1,7 +1,7 @@
 import os
 
 # 固定パラメータ
-gpu_ids = 0
+gpu_ids = [0]
 batch_size_per_gpu = 5
 train_workers_per_gpu = 6
 eval_workers_per_gpu = 2
@@ -16,11 +16,11 @@ gpu_ids_str = ",".join(map(str, gpu_ids))
 # ループ処理
 for dt in event_frame_dts:
     command = f"""
-    python3 RVT/train.py model=rnndet dataset=gen1 dataset.path={data_dir} wandb.project_name=RVT_ssm_gen1_frame_{dt} \
+    python3 RVT/train.py model=rnndet dataset=gen1 dataset.path={data_dir} wandb.project_name=part2_SSM_gen1_frame_{dt} \
     wandb.group_name=gen1 +experiment/gen1={mdl_cfg}.yaml hardware.gpus="[ {gpu_ids_str} ]" \
     batch_size.train={batch_size_per_gpu} batch_size.eval={batch_size_per_gpu} \
     hardware.num_workers.train={train_workers_per_gpu} hardware.num_workers.eval={eval_workers_per_gpu} \
-    dataset.ev_repr_name="'event_frame_dt={dt}'" model.backbone.input_channels={input_channels}
+    dataset.ev_repr_name="'event_frame_dt={dt}'" model.backbone.input_channels={input_channels} dataset.sequence_length=15
     """
     print(f"Running command for gen1 event_frame_dt={dt}")
     os.system(command)  # 実際にコマンドを実行
